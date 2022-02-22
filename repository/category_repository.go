@@ -8,7 +8,7 @@ import (
 )
 
 type CategoryRepository interface {
-	Insert(ctx context.Context, tx *sql.Tx, category entity.Category) entity.Category
+	Create(ctx context.Context, tx *sql.Tx, category entity.Category) entity.Category
 	Update(ctx context.Context, tx *sql.Tx, category entity.Category) entity.Category
 	Delete(ctx context.Context, tx *sql.Tx, category entity.Category)
 	FindById(ctx context.Context, tx *sql.Tx, categoryId int64) (entity.Category, error)
