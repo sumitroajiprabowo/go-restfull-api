@@ -14,14 +14,20 @@ type CategoryControllerImpl struct {
 	CategoryService service.CategoryService
 }
 
+func NewCategoryController(categoryService service.CategoryService) CategoryController {
+	return &CategoryControllerImpl{
+		CategoryService: categoryService,
+	}
+}
+
 // Create a new CategoryControllerImpl Insert method to handle POST requests to /categories
-func (c *CategoryControllerImpl) Insert(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (c *CategoryControllerImpl) Create(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 	var request web.CategoryCreateRequest
 
 	helper.ReadFromRequestBody(r, &request)
 
-	response := c.CategoryService.Insert(r.Context(), request)
+	response := c.CategoryService.Create(r.Context(), request)
 
 	webResponse := web.WebResponse{
 		Code:   200,
