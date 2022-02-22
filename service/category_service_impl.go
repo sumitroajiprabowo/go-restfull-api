@@ -5,6 +5,7 @@ import (
 	"database/sql"
 
 	"github.com/go-playground/validator/v10"
+	"github.com/sumitroajiprabowo/go-restfull-api/exception"
 	"github.com/sumitroajiprabowo/go-restfull-api/helper"
 	"github.com/sumitroajiprabowo/go-restfull-api/model/entity"
 	"github.com/sumitroajiprabowo/go-restfull-api/model/web"
@@ -15,6 +16,14 @@ type CategoryServiceImpl struct {
 	CategoryRepository repository.CategoryRepository
 	DB                 *sql.DB
 	Validate           *validator.Validate
+}
+
+func NewCategoryService(categoryRepository repository.CategoryRepository, DB *sql.DB, validate *validator.Validate) CategoryService {
+	return &CategoryServiceImpl{
+		CategoryRepository: categoryRepository,
+		DB:                 DB,
+		Validate:           validate,
+	}
 }
 
 // CategoryServiceImplementation.Create with Rollback
@@ -29,7 +38,7 @@ func (c *CategoryServiceImpl) Create(ctx context.Context, request web.CategoryCr
 
 	defer helper.CommitOrRollback(tx, err) // commit or rollback
 
-	category := c.CategoryRepository.Insert(ctx, tx, entity.Category{
+	category := c.CategoryRepository.Create(ctx, tx, entity.Category{
 		Name: request.Name,
 	})
 
@@ -50,7 +59,9 @@ func (c *CategoryServiceImpl) Update(ctx context.Context, request web.CategoryUp
 
 	// check if category exist and not found
 	category, err := c.CategoryRepository.FindById(ctx, tx, request.Id)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	// update category with new name
 	category.Name = request.Name
@@ -72,7 +83,9 @@ func (c *CategoryServiceImpl) Delete(ctx context.Context, categoryId int64) {
 
 	// check if category not found
 	category, err := c.CategoryRepository.FindById(ctx, tx, categoryId)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	// delete category
 	c.CategoryRepository.Delete(ctx, tx, category)
@@ -88,7 +101,9 @@ func (c *CategoryServiceImpl) FindById(ctx context.Context, categoryId int64) we
 
 	// check if category not found
 	category, err := c.CategoryRepository.FindById(ctx, tx, categoryId)
-	helper.PanicIfError(err)
+	if err != nil {
+		panic(exception.NewNotFoundError(err.Error()))
+	}
 
 	return *helper.ToCategoryResponse(&category)
 }
