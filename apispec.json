@@ -245,7 +245,7 @@
       "CategoryAuth": {
         "type": "apiKey",
         "in": "header",
-        "name": "Authorization",
+        "name": "X-API-Key",
         "description": "Authentication for categories api"
       }
     },
