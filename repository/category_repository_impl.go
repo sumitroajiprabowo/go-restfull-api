@@ -12,13 +12,15 @@ import (
 type CategoryRepositoryImpl struct {
 }
 
-//create new instance of CategoryRepositoryImpl
-func NewCategoryRepository() *CategoryRepositoryImpl {
+/*
+Create a new instance of CategoryRepositoryImpl and return its pointer to the caller function (CategoryRepository) in order to be used in the service package.
+*/
+func NewCategoryRepository() CategoryRepository {
 	return &CategoryRepositoryImpl{}
 }
 
 // CategoryRepositoryImplementation.Insert
-func (c *CategoryRepositoryImpl) Insert(ctx context.Context, tx *sql.Tx, category entity.Category) entity.Category {
+func (c *CategoryRepositoryImpl) Create(ctx context.Context, tx *sql.Tx, category entity.Category) entity.Category {
 	q := "insert into category (name) values (?)"
 	result, err := tx.ExecContext(ctx, q, category.Name)
 	helper.PanicIfError(err)
@@ -54,6 +56,7 @@ func (c *CategoryRepositoryImpl) FindById(ctx context.Context, tx *sql.Tx, categ
 
 	row, err := tx.QueryContext(ctx, q, categoryId)
 	helper.PanicIfError(err)
+	defer row.Close()
 
 	category := entity.Category{}
 
@@ -72,6 +75,7 @@ func (c *CategoryRepositoryImpl) FindAll(ctx context.Context, tx *sql.Tx) []enti
 
 	rows, err := tx.QueryContext(ctx, q)
 	helper.PanicIfError(err)
+	defer rows.Close()
 
 	var categories []entity.Category
 	for rows.Next() {
