@@ -1,0 +1,33 @@
+### Get All Categories
+GET http://localhost:8080/api/categories
+X-API-Key: Authorization
+Accept: application/json
+
+### Create New Category
+POST http://localhost:8080/api/categories
+X-API-Key: Authorization
+Content-Type: application/json
+
+{
+    "name": "Category 1"
+}
+
+### Get Category By Id
+GET http://localhost:8080/api/categories/1
+X-API-Key: Authorization
+Accept: application/json
+
+### Update Category
+PUT http://localhost:8080/api/categories/5
+X-API-Key: Authorization
+Content-Type: application/json
+
+{
+    "name": "Category New"
+}
+
+### Delete Category
+DELETE http://localhost:8080/api/categories/5
+X-API-Key: Authorization
+Accept: application/json
+
