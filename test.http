@@ -18,7 +18,7 @@ X-API-Key: Authorization
 Accept: application/json
 
 ### Update Category
-PUT http://localhost:8080/api/categories/5
+PUT http://localhost:8080/api/categories/1
 X-API-Key: Authorization
 Content-Type: application/json
 
@@ -27,7 +27,7 @@ Content-Type: application/json
 }
 
 ### Delete Category
-DELETE http://localhost:8080/api/categories/5
+DELETE http://localhost:8080/api/categories/1
 X-API-Key: Authorization
 Accept: application/json
 
