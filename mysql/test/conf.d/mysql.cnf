@@ -1,0 +1,5 @@
+
+[mysqld]
+# This just makes sure we can append data from outside the container
+local-infile=1
+
