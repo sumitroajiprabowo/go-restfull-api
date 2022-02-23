@@ -26,7 +26,7 @@ import (
 )
 
 func setupNewDB() *sql.DB {
-	db, err := sql.Open("mysql", "root:kmzway87aa@tcp(localhost:3306)/golang_restfull_api_test")
+	db, err := sql.Open("mysql", "root:example@tcp(localhost:3307)/golang_restfull_api_test")
 	helper.PanicIfError(err)
 
 	// set pool settings
