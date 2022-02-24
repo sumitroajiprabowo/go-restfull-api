@@ -15,7 +15,7 @@ type CategoryRepositoryImpl struct {
 /*
 Create a new instance of CategoryRepositoryImpl and return its pointer to the caller function (CategoryRepository) in order to be used in the service package.
 */
-func NewCategoryRepository() CategoryRepository {
+func NewCategoryRepository() *CategoryRepositoryImpl {
 	return &CategoryRepositoryImpl{}
 }
 
